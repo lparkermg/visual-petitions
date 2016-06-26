@@ -14,6 +14,7 @@ define(
       self.petitionByConstituency = ko.observableArray([]);
       self.petitionByCountry = ko.observableArray([]);
       self.petitionState = ko.observable("");
+      self.petitionLastUpdated = ko.observable("");
 
       self.showByConstituency = ko.observable(false);
       self.showByCountry = ko.observable(false);
@@ -41,12 +42,13 @@ define(
 
             self.petitionAction(jsonData.data.attributes.action);
             self.petitionBackground(jsonData.data.attributes.background);
-            self.petitionCreatedOn(jsonData.data.attributes.created_at);
+            self.petitionCreatedOn(moment(jsonData.data.attributes.created_at).toString());
             self.petitionCreator(jsonData.data.attributes.creator_name);
             self.petitionSignatureCount(jsonData.data.attributes.signature_count);
             self.petitionByConstituency(jsonData.data.attributes.signatures_by_constituency);
             self.petitionByCountry(jsonData.data.attributes.signatures_by_country);
             self.petitionState(jsonData.data.attributes.state);
+            self.petitionLastUpdated(moment(jsonData.data.attributes.updated_at).toString());
 
             self.petitionByConstituency.sort(function srt(a, b) {
               return a.signature_count < b.signature_count ? 1 : -1;

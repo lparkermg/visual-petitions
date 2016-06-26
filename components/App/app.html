@@ -32,7 +32,11 @@
       <p><em>Find the petition ID and enter it in the text area at the top of the page.</em></p>
     </div>
   </div>
+  <div class="row">
+    <p><em>The data shown on this page is directly pulled from public facing files on petition.parliament.uk.</em></p>
+  </div>
 </div>
+
 <!--/ko-->
 <!--ko if: loadSuccess-->
 <div class="container">
@@ -45,7 +49,7 @@
    <div class="jumbotron">
      <h1>Creation Details:</h1>
      <hr>
-     <p>Created by <span data-bind="text: petitionCreator"></span> at <span data-bind="text: petitionCreatedOn"></span> and currently has been signed <strong><span data-bind="text: petitionSignatureCount"></span></strong> time(s).</p>
+     <p>Created by <span data-bind="text: petitionCreator"></span> on <span data-bind="text: petitionCreatedOn"></span> and currently has been signed <strong><span data-bind="text: petitionSignatureCount"></span></strong> time(s).</p>
    </div>
 
    <span>
@@ -93,6 +97,9 @@
         <!--/ko-->
       </table>
    <!--/ko-->
+  </div>
+  <div class="row">
+    <p><em>The data above has been collected from a public facing file on petition.parliament.uk. This was collected on <span data-bind="text: petitionLastUpdated"></span>.</em></p>
   </div>
 </div>
 <!--/ko-->
