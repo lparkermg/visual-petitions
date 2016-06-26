@@ -38,6 +38,7 @@ define(
             var jsonData = JSON.parse(this.response);
 
             window.Config.JsonData = jsonData;
+
             self.petitionAction(jsonData.data.attributes.action);
             self.petitionBackground(jsonData.data.attributes.background);
             self.petitionCreatedOn(jsonData.data.attributes.created_at);

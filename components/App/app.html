@@ -1,7 +1,7 @@
 <nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#">Petition Visualizar</a>
+      <a class="navbar-brand" href="#">Petition Visualiser</a>
     </div>
     <form class="navbar-form navbar-right" role="search">
       <div class="form-group">
@@ -36,19 +36,47 @@
      <p>Created by <span data-bind="text: petitionCreator"></span> at <span data-bind="text: petitionCreatedOn"></span> and currently has been signed <strong><span data-bind="text: petitionSignatureCount"></span></strong> time(s).</p>
    </div>
    <span>
-     <button type="submit" class="btn btn-default" data-bind="click: toggleByConstituencies">Show/Hide</button> <h3>Signatures By Constituency:</h3>
+     <h3><button type="submit" class="btn btn-default" data-bind="click: toggleByConstituencies">Show/Hide</button> Signatures By Constituency:</h3>
      <hr>
    </span>
    <!--ko if: showByConstituency-->
-      <p>Show By Constituency Table here...</p>
+      <table class="table table-striped">
+        <tr>
+          <th>Name</th>
+          <th>MP</th>
+          <th>Signature Count</th>
+          <th>% of Total</th>
+        </tr>
+      <!--ko foreach: petitionByConstituency-->
+        <tr>
+          <td data-bind="text: $data.name"></td>
+          <td data-bind="text: $data.mp"></td>
+          <td data-bind="text: $data.signature_count"></td>
+          <td>Unknown Currently</td>
+        </tr>
+      <!--/ko-->
+    </table>
    <!--/ko-->
 
    <span>
-     <button type="submit" class="btn btn-default" data-bind="click: toggleByCountries">Show/Hide</button> <h3>Signatures By Country:</h3>
+     <h3><button type="submit" class="btn btn-default" data-bind="click: toggleByCountries">Show/Hide</button> Signatures By Country:</h3>
      <hr>
    </span>
    <!--ko if: showByCountry-->
-      <p>Show by Country Table Here...</p>
+      <table class="table table-striped">
+        <tr>
+          <th>Name (Code)</th>
+          <th>Signature Count</th>
+          <th>% of Total</th>
+        </tr>
+        <!--ko foreach: petitionByCountry-->
+          <tr>
+            <td><span data-bind="text: $data.name"></span> (<span data-bind="text: $data.code"></span>)</td>
+            <td data-bind="text: $data.signature_count"></td>
+            <td>Currently Unknown</td>
+          </tr>
+        <!--/ko-->
+      </table>
    <!--/ko-->
   </div>
 </div>
