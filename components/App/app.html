@@ -14,14 +14,42 @@
 <!--ko ifnot: loadSuccess-->
 <div class="container">
   <div class="row">
-    <h1>No Data</h1>
-    <p><em>Find the petition ID and enter it in the text area at the top of the page.</em></p>
+    <div class="jumbotron">
+      <h1>No Data</h1>
+      <hr>
+      <p><em>Find the petition ID and enter it in the text area at the top of the page.</em></p>
+    </div>
   </div>
 </div>
 <!--/ko-->
 <!--ko if: loadSuccess-->
 <div class="container">
   <div class="row">
+    <div class="jumbotron">
+      <h1 data-bind="text: petitionAction"></h1>
+      <hr>
+      <p data-bind="text: petitionBackground"></p>
+    </div>
+   <div class="jumbotron">
+     <h1>Creation Details:</h1>
+     <hr>
+     <p>Created by <span data-bind="text: petitionCreator"></span> at <span data-bind="text: petitionCreatedOn"></span> and currently has been signed <strong><span data-bind="text: petitionSignatureCount"></span></strong> time(s).</p>
+   </div>
+   <span>
+     <button type="submit" class="btn btn-default" data-bind="click: toggleByConstituencies">Show/Hide</button> <h3>Signatures By Constituency:</h3>
+     <hr>
+   </span>
+   <!--ko if: showByConstituency-->
+      <p>Show By Constituency Table here...</p>
+   <!--/ko-->
+
+   <span>
+     <button type="submit" class="btn btn-default" data-bind="click: toggleByCountries">Show/Hide</button> <h3>Signatures By Country:</h3>
+     <hr>
+   </span>
+   <!--ko if: showByCountry-->
+      <p>Show by Country Table Here...</p>
+   <!--/ko-->
   </div>
 </div>
 <!--/ko-->
