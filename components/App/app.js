@@ -10,7 +10,7 @@ define(
       self.petitionBackground = ko.observable("");
       self.petitionCreatedOn = ko.observable("");
       self.petitionCreator = ko.observable("");
-      self.petitionSignatureCount = ko.observable("");
+      self.petitionSignatureCount = ko.observable(0);
       self.petitionByConstituency = ko.observableArray([]);
       self.petitionByCountry = ko.observableArray([]);
       self.petitionState = ko.observable("");
@@ -48,6 +48,13 @@ define(
             self.petitionByCountry(jsonData.data.attributes.signatures_by_country);
             self.petitionState(jsonData.data.attributes.state);
 
+            self.petitionByConstituency.sort(function srt(a, b) {
+              return a.signature_count < b.signature_count ? 1 : -1;
+            });
+            self.petitionByCountry.sort(function srt(a, b) {
+              return a.signature_count < b.signature_count ? 1 : -1;
+            });
+
             self.isLoading(false);
             self.loadSuccess(true);
           }
@@ -81,6 +88,14 @@ define(
           self.showByConstituency(true);
         }
       };
+
+      self.getPercentage = function(amount){
+        return ((amount/self.petitionSignatureCount()) * 100).toFixed(2);
+      };
+
+      function srt(a, b) {
+        return a.signature_count() > b.signature_count() ? 1 : -1;
+      }
     };
   }
 );

@@ -52,7 +52,9 @@
           <td data-bind="text: $data.name"></td>
           <td data-bind="text: $data.mp"></td>
           <td data-bind="text: $data.signature_count"></td>
-          <td>Unknown Currently</td>
+          <td>
+            <span data-bind="text: $parent.getPercentage($data.signature_count)"></span>%
+          </td>
         </tr>
       <!--/ko-->
     </table>
@@ -73,7 +75,7 @@
           <tr>
             <td><span data-bind="text: $data.name"></span> (<span data-bind="text: $data.code"></span>)</td>
             <td data-bind="text: $data.signature_count"></td>
-            <td>Currently Unknown</td>
+            <td><span data-bind="text: $parent.getPercentage($data.signature_count)"></span>%</td>
           </tr>
         <!--/ko-->
       </table>
