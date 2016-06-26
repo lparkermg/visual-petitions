@@ -59,6 +59,7 @@
    <!--ko if: showByConstituency-->
       <table class="table table-striped">
         <tr>
+          <th></th>
           <th>Name</th>
           <th>MP</th>
           <th>Signature Count</th>
@@ -66,6 +67,7 @@
         </tr>
       <!--ko foreach: petitionByConstituency-->
         <tr>
+          <td><span data-bind="text: ($index() + 1)"></span>.</td>
           <td data-bind="text: $data.name"></td>
           <td data-bind="text: $data.mp"></td>
           <td data-bind="text: $data.signature_count"></td>
@@ -84,12 +86,14 @@
    <!--ko if: showByCountry-->
       <table class="table table-striped">
         <tr>
+          <th></th>
           <th>Name (Code)</th>
           <th>Signature Count</th>
           <th>% of Total</th>
         </tr>
         <!--ko foreach: petitionByCountry-->
           <tr>
+            <td><span data-bind="text: ($index() + 1)"></span>.</td>
             <td><span data-bind="text: $data.name"></span> (<span data-bind="text: $data.code"></span>)</td>
             <td data-bind="text: $data.signature_count"></td>
             <td><span data-bind="text: $parent.getPercentage($data.signature_count)"></span>%</td>
