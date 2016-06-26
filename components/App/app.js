@@ -4,7 +4,7 @@ define(
     return function() {
       var self = this;
 
-      self.petitionId = ko.observable("0");
+      self.petitionId = ko.observable("131215");
 
       self.petitionAction = ko.observable("");
       self.petitionBackground = ko.observable("");
@@ -94,6 +94,7 @@ define(
       self.getPercentage = function(amount){
         return ((amount/self.petitionSignatureCount()) * 100).toFixed(2);
       };
+      self.LoadPetitionData();
     };
   }
 );
