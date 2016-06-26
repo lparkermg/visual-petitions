@@ -92,10 +92,6 @@ define(
       self.getPercentage = function(amount){
         return ((amount/self.petitionSignatureCount()) * 100).toFixed(2);
       };
-
-      function srt(a, b) {
-        return a.signature_count() > b.signature_count() ? 1 : -1;
-      }
     };
   }
 );
