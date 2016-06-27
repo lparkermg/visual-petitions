@@ -3,7 +3,8 @@ define(
   function(ko){
     return function() {
       var self = this;
-
+      var countryDataset;
+      var constituencyDataset;
       self.petitionId = ko.observable("131215");
 
       self.petitionAction = ko.observable("");
@@ -58,6 +59,9 @@ define(
               return a.signature_count < b.signature_count ? 1 : -1;
             });
 
+            self.GenerateCountryDataset(jsonData.data.attributes.signatures_by_country,10);
+            self.GenerateConstituencyDataset(jsonData.data.attributes.signatures_by_constituency,10);
+
             self.isLoading(false);
             self.loadSuccess(true);
             self.showWhat("detail");
@@ -107,12 +111,93 @@ define(
 
       self.showCountryCharts = function(){
         self.showWhat("country-charts");
+        //self.displayCountryGraph();
+        displayCountryGraph();
       };
 
       self.showConstituencyCharts = function(){
         self.showWhat("constit-charts");
+        displayConstituencyGraph();
       };
 
+      self.GenerateCountryDataset = function(data, toShow){
+        //Currently Barchart only.
+        var dataAndLabels = {labels:[],data:[]};
+        if(toShow > data.length){
+          toShow = data.length;
+        }
+        for(var i = 0; i < toShow;i++){
+            dataAndLabels.labels.push(data[i].name);
+            var percent = self.getPercentage(data[i].signature_count);
+            dataAndLabels.data.push(percent);
+        }
+
+        countryDataset = {
+          labels: dataAndLabels.labels,
+          datasets:[
+            {
+              label: "Signature Count % - Top " + toShow + " (Country)",
+              backgroundColor: "rgba(255,99,132,0.5)",
+              borderColor: "rgba(255,99,132,1)",
+              borderWidth: 1,
+              hoverBackgroundColor: "rgba(255,99,132,0.75)",
+              hoverBorderColor: "rgba(255,99,132,1)",
+              data: dataAndLabels.data
+            }
+          ]
+        };
+        //console.log(countryDataset);
+      };
+
+      self.GenerateConstituencyDataset = function(data,toShow){
+        //Currently Barchart only.
+        var dataAndLabels = {labels:[], data:[]};
+        console.log(data);
+        if(toShow > data.length){
+          toShow = data.length;
+        }
+        for(var i = 0; i < toShow;i++){
+          dataAndLabels.labels.push(data[i].name);
+          var percent = self.getPercentage(data[i].signature_count);
+          dataAndLabels.data.push(percent);
+        }
+
+        constituencyDataset = {
+          labels: dataAndLabels.labels,
+          datasets:[
+            {
+              label: "Signature Count % - Top " + toShow + " (Constituency)",
+              backgroundColor: "rgba(255,99,132,0.5)",
+              borderColor: "rgba(255,99,132,1)",
+              borderWidth: 1,
+              hoverBackgroundColor: "rgba(255,99,132,0.75)",
+              hoverBorderColor: "rgba(255,99,132,1)",
+              data: dataAndLabels.data
+            }
+          ]
+        };
+
+        //console.log(constituencyDataset);
+      };
+
+      function displayConstituencyGraph(){
+        //console.log("attempting to display country graph.");
+        var ctxBar = document.getElementById("constituencyChartBar");
+        var ctxRadar = document.getElementById("constituencyChartRadar");
+        //console.log(ctx);
+        var constituencyChartMain = new Chart(ctxBar,{type:'bar',data: constituencyDataset,options:{scales:{yAxes:[{ticks:{beginAtZero:true}}]}}});
+        var constituencyChartRadar = new Chart(ctxRadar,{type:'radar',data: constituencyDataset});
+
+      }
+
+      function displayCountryGraph(){
+        var ctxBar = document.getElementById("countryChartBar");
+        var ctxRadar = document.getElementById("countryChartRadar");
+        //console.log(ctx);
+        var countryChartMain = new Chart(ctxBar,{type:'bar',data: countryDataset,options:{scales:{yAxes:[{ticks:{beginAtZero:true}}]}}});
+        var countryChartRadar = new Chart(ctxRadar,{type:'radar',data: countryDataset});
+
+      }
       self.LoadPetitionData();
     };
   }

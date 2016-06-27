@@ -41,7 +41,7 @@
             <button type="button" class="btn btn-default" data-bind="click: showConstituencyCharts()">Constituency Charts</button>
           </div>
           <div class="btn-group" role="group">
-            <button type="button" class="btn btn-default" data-bind="click: showByCountry()">Country Charts</button>
+            <button type="button" class="btn btn-default" data-bind="click: showCountryCharts()">Country Charts</button>
           </div>
         </div>
       </p>
@@ -116,10 +116,12 @@
 
      <!--/ko-->
      <!--ko if: showWhat() === "constit-charts"-->
-      <div>Constituency Chart Stuff...</div>
+      <canvas id="constituencyChartBar" width="100%" height="50"></canvas>
+      <canvas id="constituencyChartRadar" width="100%" height="50"></canvas>
      <!--/ko-->
      <!--ko if: showWhat() === "country-charts"-->
-      <div>Country Chart Stuff...</div>
+      <canvas id="countryChartBar" width="100%" height="50"></canvas>
+      <canvas id="countryChartRadar" width="100%" height="50"></canvas>
      <!--/ko-->
     <div class="row">
       <p><em>The data above has been collected from a public facing file on petition.parliament.uk. This was collected on <span data-bind="text: petitionLastUpdated"></span>.</em></p>
