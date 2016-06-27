@@ -16,6 +16,7 @@ define(
       self.petitionState = ko.observable("");
       self.petitionLastUpdated = ko.observable("");
 
+      self.showWhat = ko.observable('detail');
       self.showByConstituency = ko.observable(false);
       self.showByCountry = ko.observable(false);
       self.loadSuccess = ko.observable(false);
@@ -59,6 +60,7 @@ define(
 
             self.isLoading(false);
             self.loadSuccess(true);
+            self.showWhat("detail");
           }
           else {
             self.isLoading(false);
@@ -94,6 +96,23 @@ define(
       self.getPercentage = function(amount){
         return ((amount/self.petitionSignatureCount()) * 100).toFixed(2);
       };
+
+      self.showDetails = function(){
+        self.showWhat("detail");
+      };
+
+      self.showTables = function(){
+        self.showWhat("tables");
+      };
+
+      self.showCountryCharts = function(){
+        self.showWhat("country-charts");
+      };
+
+      self.showConstituencyCharts = function(){
+        self.showWhat("constit-charts");
+      };
+
       self.LoadPetitionData();
     };
   }
