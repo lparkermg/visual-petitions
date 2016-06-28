@@ -4,7 +4,11 @@ define(
     return function() {
       var self = this;
       var countryDataset;
+      var countryDatasetSigCount;
+
       var constituencyDataset;
+      var constituencyDatasetSigCount;
+
       self.petitionId = ko.observable("131215");
 
       self.petitionAction = ko.observable("");
@@ -123,13 +127,17 @@ define(
       self.GenerateCountryDataset = function(data, toShow){
         //Currently Barchart only.
         var dataAndLabels = {labels:[],data:[]};
+        var dataAndLabelsSigCount = {labels:[],data:[]};
+
         if(toShow > data.length){
           toShow = data.length;
         }
         for(var i = 0; i < toShow;i++){
+            dataAndLabelsSigCount.labels.push(data[i].name);
             dataAndLabels.labels.push(data[i].name);
             var percent = self.getPercentage(data[i].signature_count);
             dataAndLabels.data.push(percent);
+            dataAndLabelsSigCount.data.push(data[i].signature_count);
         }
 
         countryDataset = {
@@ -146,20 +154,39 @@ define(
             }
           ]
         };
+
+        countryDatasetSigCount = {
+          labels: dataAndLabelsSigCount.labels,
+          datasets:[
+            {
+              label: "Signature Count - Top " + toShow + " (Country)",
+              backgroundColor: "rgba(99,255,132,0.5)",
+              borderColor: "rgba(99,255,132,1)",
+              borderWidth: 1,
+              hoverBackgroundColor: "rgba(99,255,132,0.75)",
+              hoverBorderColor: "rgba(99,255,132,1)",
+              data: dataAndLabelsSigCount.data
+            }
+          ]
+        };
         //console.log(countryDataset);
       };
 
       self.GenerateConstituencyDataset = function(data,toShow){
         //Currently Barchart only.
         var dataAndLabels = {labels:[], data:[]};
+        var dataAndLabelsSigCount = {labels:[], data:[]};
+
         console.log(data);
         if(toShow > data.length){
           toShow = data.length;
         }
         for(var i = 0; i < toShow;i++){
           dataAndLabels.labels.push(data[i].name);
+          dataAndLabelsSigCount.labels.push(data[i].name);
           var percent = self.getPercentage(data[i].signature_count);
           dataAndLabels.data.push(percent);
+          dataAndLabelsSigCount.data.push(data[i].signature_count);
         }
 
         constituencyDataset = {
@@ -177,6 +204,20 @@ define(
           ]
         };
 
+        constituencyDatasetSigCount = {
+          labels: dataAndLabelsSigCount.labels,
+          datasets:[
+            {
+              label: "Signature Count - Top " + toShow + " (Constituency)",
+              backgroundColor: "rgba(99,255,132,0.5)",
+              borderColor: "rgba(99,255,132,1)",
+              borderWidth: 1,
+              hoverBackgroundColor: "rgba(99,255,132,0.75)",
+              hoverBorderColor: "rgba(99,255,132,1)",
+              data: dataAndLabelsSigCount.data
+            }
+          ]
+        };
         //console.log(constituencyDataset);
       };
 
@@ -184,19 +225,29 @@ define(
         //console.log("attempting to display country graph.");
         var ctxBar = document.getElementById("constituencyChartBar");
         var ctxRadar = document.getElementById("constituencyChartRadar");
+
+        var ctxSigBar = document.getElementById("constituencyChartSigBar");
+        var ctxSigRadar = document.getElementById("constituencyChartSigRadar");
         //console.log(ctx);
         var constituencyChartMain = new Chart(ctxBar,{type:'bar',data: constituencyDataset,options:{scales:{yAxes:[{ticks:{beginAtZero:true}}]}}});
         var constituencyChartRadar = new Chart(ctxRadar,{type:'radar',data: constituencyDataset});
 
+        var constituencyChartMainSig = new Chart(ctxSigBar,{type:'bar',data: constituencyDatasetSigCount,options:{scales:{yAxes:[{ticks:{beginAtZero:true}}]}}});
+        var constituencyChartRadarSig = new Chart(ctxSigRadar,{type:'radar',data: constituencyDatasetSigCount});
       }
 
       function displayCountryGraph(){
         var ctxBar = document.getElementById("countryChartBar");
         var ctxRadar = document.getElementById("countryChartRadar");
+
+        var ctxSigBar = document.getElementById("countryChartSigBar");
+        var ctxSigRadar = document.getElementById("countryChartSigRadar");
         //console.log(ctx);
         var countryChartMain = new Chart(ctxBar,{type:'bar',data: countryDataset,options:{scales:{yAxes:[{ticks:{beginAtZero:true}}]}}});
         var countryChartRadar = new Chart(ctxRadar,{type:'radar',data: countryDataset});
 
+        var countryChartMainSig = new Chart(ctxSigBar,{type:'bar',data: countryDatasetSigCount,options:{scales:{yAxes:[{ticks:{beginAtZero:true}}]}}});
+        var countryChartRadarSig = new Chart(ctxSigRadar,{type:'radar',data: countryDatasetSigCount});
       }
       self.LoadPetitionData();
     };
